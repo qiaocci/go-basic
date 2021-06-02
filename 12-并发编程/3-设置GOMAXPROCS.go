@@ -3,24 +3,29 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"time"
+	"sync"
 )
+
+var wg2 sync.WaitGroup
 
 func a() {
 	for i := 1; i < 10; i++ {
 		fmt.Println("A:", i)
 	}
+	wg2.Done()
 }
 
 func b() {
 	for i := 1; i < 10; i++ {
 		fmt.Println("B:", i)
 	}
+	wg2.Done()
 }
 
 func main() {
-	runtime.GOMAXPROCS(2)
+	runtime.GOMAXPROCS(8)
+	wg2.Add(2)
 	go a()
 	go b()
-	time.Sleep(time.Second)
+	wg2.Wait()
 }
