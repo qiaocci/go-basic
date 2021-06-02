@@ -14,7 +14,7 @@ func main() {
 	}()
 
 	go func() { // 开启goroutine， 从c1中取数据，放入c2
-		for {
+		for { // 从通道取值方法1
 			i, ok := <-c1
 			if !ok {
 				break
@@ -24,7 +24,7 @@ func main() {
 		close(c2)
 	}()
 
-	for i := range c2 {
+	for i := range c2 { // 从通道取值，方法2
 		fmt.Println(i)
 	}
 }
