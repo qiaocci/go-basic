@@ -56,11 +56,11 @@ func getWithParams() {
 	fmt.Println(string(body))
 }
 
-func post()  {
+func post() {
 	apiUrl := "http://httpbin.org/post"
-	contentType:="application/json"
-	data:=`{"name": "qiaocc", "age": 29}`
-	resp, err:=http.Post(apiUrl, contentType, strings.NewReader(data))
+	contentType := "application/json"
+	data := `{"name": "qiaocc", "age": 29}`
+	resp, err := http.Post(apiUrl, contentType, strings.NewReader(data))
 	if err != nil {
 		fmt.Printf("post failed, err: %v\n", err)
 		return
