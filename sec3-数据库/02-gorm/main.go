@@ -7,7 +7,7 @@ import (
 )
 
 type UserInfo struct {
-	ID     uint
+	gorm.Model
 	Name   string
 	Gender string
 	Hobby  string
@@ -21,22 +21,22 @@ func main() {
 	}
 
 	// 自动迁移
-	//err = db.AutoMigrate(&UserInfo{})
-	//if err != nil {
-	//	fmt.Printf("auto migrate failed, err:%v\n", err)
-	//}
+	err = db.AutoMigrate(&UserInfo{})
+	if err != nil {
+		fmt.Printf("auto migrate failed, err:%v\n", err)
+	}
 	//
 	//// 增
-	//db.Create(&UserInfo{
-	//	Name:   "marry",
-	//	Gender: "女",
-	//	Hobby:  "旅游",
-	//})
+	db.Create(&UserInfo{
+		Name:   "marry",
+		Gender: "女",
+		Hobby:  "旅游",
+	})
 
 	// 查
 	var u UserInfo
-	db.First(&u, 1) // 主键=1
-	//fmt.Printf("id=%v, name=%v, gender=%v, hobby:%v\n", u.ID, u.Name, u.Gender, u.Hobby)
+	db.First(&u, 2) // 主键=1
+	fmt.Printf("id=%v, name=%v, gender=%v, hobby:%v\n", u.ID, u.Name, u.Gender, u.Hobby)
 	//db.First(&u, "gender=?", "男") // 性别男
 	//fmt.Printf("id=%v, name=%v, gender=%v, hobby:%v\n", u.ID, u.Name, u.Gender, u.Hobby)
 
@@ -47,5 +47,5 @@ func main() {
 	//})
 
 	// 删
-	db.Delete(&u, 1)
+	//db.Delete(&u, 1)
 }
