@@ -16,12 +16,12 @@ func main() {
 	fmt.Println(name[1], strconv.FormatInt(int64(name[1]), 2)) // 185 10111001
 	fmt.Println(name[2], strconv.FormatInt(int64(name[2]), 2)) // 148 10010100
 
-	// 沛
+	// 超
 	fmt.Println(name[3])
 	fmt.Println(name[4])
 	fmt.Println(name[5])
 
-	// 齐
+	// 超
 	fmt.Println(name[6])
 	fmt.Println(name[7])
 	fmt.Println(name[8])
