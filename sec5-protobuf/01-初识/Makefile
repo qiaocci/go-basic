@@ -1,2 +1,2 @@
 compile:
-	protoc --go_out=. ./student.proto
+	protoc --go_out=. *.proto
