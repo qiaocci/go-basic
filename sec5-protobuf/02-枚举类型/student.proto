@@ -7,7 +7,7 @@ message Student {
   string name = 1;
   // 枚举类型
   enum Gender {
-    FEMALE = 0;
+    FEMALE = 0; // 枚举类型的第一个选项的标识符必须是0，这也是枚举类型的默认值。
     MALE = 1;
   }
   Gender gender = 2;

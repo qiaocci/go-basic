@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package main;
+
+message SearchResponse{
+  repeated Result result = 1;
+}
+
+message Result {
+  string  url = 1;
+  string  title = 2;
+  repeated string snippets = 3;
+}
+
+option go_package = "./std";
