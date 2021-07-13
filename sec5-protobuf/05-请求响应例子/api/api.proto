@@ -14,5 +14,5 @@ message HelloReply {
   string message = 1;
 }
 
-option go_package = ".";
+option go_package = "/";
 
