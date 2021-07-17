@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	pb "grpc-client-and-server/proto"
 	"log"
 )
@@ -10,7 +11,12 @@ import (
 const PORT = "9001"
 
 func main() {
-	conn, err := grpc.Dial(":"+PORT, grpc.WithInsecure())
+	c, err := credentials.NewClientTLSFromFile("../conf/server.pem", "go-grpc-example")
+	if err != nil {
+		log.Fatalf("credentials.NewServerTLSFromFile err: %v\n", err)
+	}
+
+	conn, err := grpc.Dial(":"+PORT, grpc.WithTransportCredentials(c))
 	if err != nil {
 		log.Fatalf("grpc.Dial err: %v\n", err)
 	}
