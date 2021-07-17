@@ -20,15 +20,62 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// 枚举类型
+type Student_Gender int32
+
+const (
+	Student_FEMALE Student_Gender = 0
+	Student_MALE   Student_Gender = 1
+)
+
+// Enum value maps for Student_Gender.
+var (
+	Student_Gender_name = map[int32]string{
+		0: "FEMALE",
+		1: "MALE",
+	}
+	Student_Gender_value = map[string]int32{
+		"FEMALE": 0,
+		"MALE":   1,
+	}
+)
+
+func (x Student_Gender) Enum() *Student_Gender {
+	p := new(Student_Gender)
+	*p = x
+	return p
+}
+
+func (x Student_Gender) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Student_Gender) Descriptor() protoreflect.EnumDescriptor {
+	return file_student_proto_enumTypes[0].Descriptor()
+}
+
+func (Student_Gender) Type() protoreflect.EnumType {
+	return &file_student_proto_enumTypes[0]
+}
+
+func (x Student_Gender) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Student_Gender.Descriptor instead.
+func (Student_Gender) EnumDescriptor() ([]byte, []int) {
+	return file_student_proto_rawDescGZIP(), []int{0, 0}
+}
+
 // 消息类型, 字段后的数字是字段的唯一标识符
 type Student struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Male   bool    `protobuf:"varint,2,opt,name=male,proto3" json:"male,omitempty"`
-	Scores []int32 `protobuf:"varint,3,rep,packed,name=scores,proto3" json:"scores,omitempty"` // repeated代表数组
+	Name   string         `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Gender Student_Gender `protobuf:"varint,2,opt,name=gender,proto3,enum=main.Student_Gender" json:"gender,omitempty"`
+	Scores []int32        `protobuf:"varint,3,rep,packed,name=scores,proto3" json:"scores,omitempty"` // repeated代表数组
 }
 
 func (x *Student) Reset() {
@@ -70,11 +117,11 @@ func (x *Student) GetName() string {
 	return ""
 }
 
-func (x *Student) GetMale() bool {
+func (x *Student) GetGender() Student_Gender {
 	if x != nil {
-		return x.Male
+		return x.Gender
 	}
-	return false
+	return Student_FEMALE
 }
 
 func (x *Student) GetScores() []int32 {
@@ -88,13 +135,16 @@ var File_student_proto protoreflect.FileDescriptor
 
 var file_student_proto_rawDesc = []byte{
 	0x0a, 0x0d, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
-	0x04, 0x6d, 0x61, 0x69, 0x6e, 0x22, 0x49, 0x0a, 0x07, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74,
-	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x61, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x04, 0x6d, 0x61, 0x6c, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x6f, 0x72,
-	0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x05, 0x52, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73,
-	0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f, 0x73, 0x74, 0x64, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x04, 0x6d, 0x61, 0x69, 0x6e, 0x22, 0x83, 0x01, 0x0a, 0x07, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e,
+	0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x06, 0x67, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x53, 0x74, 0x75,
+	0x64, 0x65, 0x6e, 0x74, 0x2e, 0x47, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x52, 0x06, 0x67, 0x65, 0x6e,
+	0x64, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x18, 0x03, 0x20,
+	0x03, 0x28, 0x05, 0x52, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73, 0x22, 0x1e, 0x0a, 0x06, 0x47,
+	0x65, 0x6e, 0x64, 0x65, 0x72, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x45, 0x4d, 0x41, 0x4c, 0x45, 0x10,
+	0x00, 0x12, 0x08, 0x0a, 0x04, 0x4d, 0x41, 0x4c, 0x45, 0x10, 0x01, 0x42, 0x07, 0x5a, 0x05, 0x2e,
+	0x2f, 0x73, 0x74, 0x64, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -109,16 +159,19 @@ func file_student_proto_rawDescGZIP() []byte {
 	return file_student_proto_rawDescData
 }
 
+var file_student_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_student_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_student_proto_goTypes = []interface{}{
-	(*Student)(nil), // 0: main.Student
+	(Student_Gender)(0), // 0: main.Student.Gender
+	(*Student)(nil),     // 1: main.Student
 }
 var file_student_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: main.Student.gender:type_name -> main.Student.Gender
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_student_proto_init() }
@@ -145,13 +198,14 @@ func file_student_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_student_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_student_proto_goTypes,
 		DependencyIndexes: file_student_proto_depIdxs,
+		EnumInfos:         file_student_proto_enumTypes,
 		MessageInfos:      file_student_proto_msgTypes,
 	}.Build()
 	File_student_proto = out.File

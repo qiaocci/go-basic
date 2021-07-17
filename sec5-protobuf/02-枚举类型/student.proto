@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package main;
+
+// 消息类型, 字段后的数字是字段的唯一标识符
+message Student {
+  string name = 1;
+  // 枚举类型
+  enum Gender {
+    FEMALE = 0; // 枚举类型的第一个选项的标识符必须是0，这也是枚举类型的默认值。
+    MALE = 1;
+  }
+  Gender gender = 2;
+
+  repeated int32 scores = 3; // repeated代表数组
+}
+
+option go_package = "./std";

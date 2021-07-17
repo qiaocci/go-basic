@@ -20,19 +20,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 消息类型, 字段后的数字是字段的唯一标识符
-type Student struct {
+type MapRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name   string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Male   bool    `protobuf:"varint,2,opt,name=male,proto3" json:"male,omitempty"`
-	Scores []int32 `protobuf:"varint,3,rep,packed,name=scores,proto3" json:"scores,omitempty"` // repeated代表数组
+	Points map[string]int32 `protobuf:"bytes,1,rep,name=points,proto3" json:"points,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 }
 
-func (x *Student) Reset() {
-	*x = Student{}
+func (x *MapRequest) Reset() {
+	*x = MapRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_student_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -40,13 +37,13 @@ func (x *Student) Reset() {
 	}
 }
 
-func (x *Student) String() string {
+func (x *MapRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Student) ProtoMessage() {}
+func (*MapRequest) ProtoMessage() {}
 
-func (x *Student) ProtoReflect() protoreflect.Message {
+func (x *MapRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_student_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,28 +55,14 @@ func (x *Student) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Student.ProtoReflect.Descriptor instead.
-func (*Student) Descriptor() ([]byte, []int) {
+// Deprecated: Use MapRequest.ProtoReflect.Descriptor instead.
+func (*MapRequest) Descriptor() ([]byte, []int) {
 	return file_student_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Student) GetName() string {
+func (x *MapRequest) GetPoints() map[string]int32 {
 	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *Student) GetMale() bool {
-	if x != nil {
-		return x.Male
-	}
-	return false
-}
-
-func (x *Student) GetScores() []int32 {
-	if x != nil {
-		return x.Scores
+		return x.Points
 	}
 	return nil
 }
@@ -88,13 +71,16 @@ var File_student_proto protoreflect.FileDescriptor
 
 var file_student_proto_rawDesc = []byte{
 	0x0a, 0x0d, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
-	0x04, 0x6d, 0x61, 0x69, 0x6e, 0x22, 0x49, 0x0a, 0x07, 0x53, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74,
-	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x61, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x04, 0x6d, 0x61, 0x6c, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x6f, 0x72,
-	0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x05, 0x52, 0x06, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x73,
-	0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f, 0x73, 0x74, 0x64, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x04, 0x6d, 0x61, 0x69, 0x6e, 0x22, 0x7d, 0x0a, 0x0a, 0x4d, 0x61, 0x70, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x34, 0x0a, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x4d, 0x61, 0x70, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x45, 0x6e, 0x74, 0x72,
+	0x79, 0x52, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x1a, 0x39, 0x0a, 0x0b, 0x50, 0x6f, 0x69,
+	0x6e, 0x74, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x3a, 0x02, 0x38, 0x01, 0x42, 0x07, 0x5a, 0x05, 0x2e, 0x2f, 0x73, 0x74, 0x64, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -109,16 +95,18 @@ func file_student_proto_rawDescGZIP() []byte {
 	return file_student_proto_rawDescData
 }
 
-var file_student_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_student_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_student_proto_goTypes = []interface{}{
-	(*Student)(nil), // 0: main.Student
+	(*MapRequest)(nil), // 0: main.MapRequest
+	nil,                // 1: main.MapRequest.PointsEntry
 }
 var file_student_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: main.MapRequest.points:type_name -> main.MapRequest.PointsEntry
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_student_proto_init() }
@@ -128,7 +116,7 @@ func file_student_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_student_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Student); i {
+			switch v := v.(*MapRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -146,7 +134,7 @@ func file_student_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_student_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

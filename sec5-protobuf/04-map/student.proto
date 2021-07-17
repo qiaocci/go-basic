@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package main;
+
+message MapRequest{
+  map<string, int32> points = 1;
+}
+option go_package = "./std";
