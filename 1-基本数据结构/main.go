@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"strconv"
 )
 
 func main() {
-	//var a int = 10
-	//res := float64(a) * 0.31
-	//fmt.Printf("res=%v\n", res)
-	fmt.Println(math.Floor(3.14))
+	// 数字转字符串
+	res := strconv.Itoa(120) // "120"
+	fmt.Println(res)
 }
