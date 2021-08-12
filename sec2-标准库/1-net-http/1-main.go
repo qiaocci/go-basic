@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	jsoniter "github.com/json-iterator/go"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -12,7 +14,8 @@ import (
 func main() {
 	//get()
 	//getWithParams()
-	post()
+	//post()
+	postHeader()
 }
 
 func get() {
@@ -108,4 +111,36 @@ func post() {
 	//}
 	//fmt.Println(string(body))
 
+}
+
+// postHeader 如果需要设置头参数，cookie之类的数据，就可以使用http.Do
+func postHeader() {
+	client := &http.Client{}
+
+	//data := `{"name": "qiaocc", "age": 29}`
+	data := make(map[string]interface{})
+	data["name"] = "qiaocc"
+	data["age"] = 29
+	data["hobby"] = []string{"football", "swimming"}
+	bytesData, _ := jsoniter.Marshal(data)
+
+	req, err := http.NewRequest("POST", "https://httpbin.org/post", bytes.NewReader(bytesData))
+	if err != nil {
+		// handle error
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Cookie", "name=anny")
+
+	resp, err := client.Do(req)
+
+	defer resp.Body.Close()
+
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// handle error
+	}
+	fmt.Println(string(b))
+	h := jsoniter.Get(b, "headers")
+	fmt.Printf("type=%T\n", h)
 }
