@@ -10,7 +10,7 @@ type sample struct {
 	b string
 }
 
-// 类型转换
+// Float64bits 类型转换
 func Float64bits(f float64) uint64 {
 	return *(*uint64)(unsafe.Pointer(&f))
 }
@@ -20,4 +20,5 @@ func main() {
 	fmt.Printf("f=%v, type=%T\n", f, f)
 	u := Float64bits(f)
 	fmt.Printf("u=%v, type=%T\n", u, u)
+
 }
