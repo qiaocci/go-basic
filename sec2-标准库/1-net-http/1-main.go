@@ -6,32 +6,33 @@ import (
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
 func main() {
-	//get()
+	get()
 	//getWithParams()
 	//post()
-	postHeader()
+	//postHeader()
 }
 
 func get() {
-	resp, err := http.Get("http://httpbin.org/get")
+	resp, err := http.Get("http://118.24.4.110")
 	if err != nil {
-		fmt.Printf("get failed, err:%v\n", err)
+		log.Printf("get failed, err:%v\n", err)
 		return
 	}
-	fmt.Println(resp)
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Printf("read from resp.Body failed, err:%v\n", err)
+		log.Printf("read from resp.Body failed, err:%v\n", err)
 		return
 	}
-	fmt.Println(string(body))
+	log.Println(string(body))
 }
 
 func getWithParams() {
