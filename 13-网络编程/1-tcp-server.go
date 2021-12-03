@@ -1,23 +1,25 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
+	"log"
 	"net"
 )
 
 func main() {
-	listen, err := net.Listen("tcp", "0.0.0.0:20000")
+	listen, err := net.Listen("tcp", "0.0.0.0:8001")
+	log.Printf("等待连接")
+
 	if err != nil {
-		fmt.Println("listen failed, err:", err)
+		log.Println("listen failed, err:", err)
 		return
 	}
 	for {
 		conn, err := listen.Accept() // 建立连接
 		if err != nil {
-			fmt.Println("accept failed, err:", err)
+			log.Println("accept failed, err:", err)
 			continue
 		}
+		log.Printf("tcp conn success, addr=%v", conn.RemoteAddr().String())
 		go process(conn) // 启动goroutine处理连接
 	}
 }
@@ -25,17 +27,27 @@ func main() {
 func process(conn net.Conn) {
 	defer conn.Close()
 
+	buffer := make([]byte, 1024)
 	for {
-		reader := bufio.NewReader(conn)
-		var buf [128]byte
-		n, err := reader.Read(buf[:]) // 读数据， 返回数据字节长度
+		// 接收客户端信息
+		n, err := conn.Read(buffer)
 		if err != nil {
-			fmt.Println("read from client failed, err:", err)
-			break
+			log.Printf("conn err=%v", err)
+			return
 		}
-		recvStr := string(buf[:n])
-		fmt.Println("收到client端发来的数据:", recvStr)
-		recvStr += "[from tx]"
-		conn.Write([]byte(recvStr))
+		log.Printf("receive data=%v", string(buffer[:n]))
+
+		// 反馈给客户端
+		bufferReturn := "我收到了"
+		n2, err := conn.Write([]byte(bufferReturn))
+		// 确认客户端未收到回执
+		if err != nil {
+			log.Printf("没有收到回执, addr=%v", conn.RemoteAddr())
+			return
+		}
+		// 确认客户端收到回执
+		n3, err := conn.Read(buffer)
+		log.Printf("addr=%v, 客户端收到回执=%v, 客户收到了=%v, 实际发送了=%v", conn.RemoteAddr(), string(buffer[:n3]), n2, len(bufferReturn))
+
 	}
 }

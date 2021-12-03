@@ -1,2 +1,2 @@
 compile:
-	 protoc -I helloworld/ helloworld/pb/helloworld.proto --go_out=plugins=grpc:helloworld
+	 protoc --go_out=plugins=grpc:helloworld helloworld/pb/*.proto

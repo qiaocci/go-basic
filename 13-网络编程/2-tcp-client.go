@@ -1,39 +1,34 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
+	"log"
 	"net"
-	"os"
-	"strings"
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "122.51.107.111:20000")
+	server, err := net.ResolveTCPAddr("tcp", "118.24.4.110:8001")
 	if err != nil {
-		fmt.Println("dail err:", err)
 		return
 	}
-	defer conn.Close()
-	inputReader := bufio.NewReader(os.Stdin)
-	for {
-		input, _ := inputReader.ReadString('\n') // 读取用户输入
-		inputInfo := strings.Trim(input, "\r\n")
-		if strings.ToUpper(inputInfo) == "Q" { // 如果输入q就退出
-			return
-		}
 
-		_, err = conn.Write([]byte(inputInfo)) // 发数据
-		if err != nil {
-			fmt.Println("write error", err)
-			return
-		}
-		buf := [512]byte{}
-		n, err := conn.Read(buf[:])
-		if err != nil {
-			fmt.Println("read error", err)
-			return
-		}
-		fmt.Println(string(buf[:n]))
+	conn, err := net.DialTCP("tcp", nil, server)
+	if err != nil {
+		log.Println("dail err:", err)
+		return
 	}
+	log.Println("conn success")
+	defer conn.Close()
+
+	words := "hello server"
+	msgBack, err := conn.Write([]byte(words))
+	if err != nil {
+		log.Printf("addr=%v, fatal err=%v", conn.RemoteAddr(), err)
+		return
+	}
+
+	buffer := make([]byte, 1024)
+	n, err := conn.Read(buffer)
+	log.Printf("addr=%v, 服务器反馈=%v. msgBack=%v, 实际发送了=%v", conn.RemoteAddr(), string(buffer[:n]), msgBack, len(words))
+	conn.Write([]byte("ok"))
+	conn.Write([]byte("hhh"))
 }

@@ -27,11 +27,11 @@ func main() {
 	}
 	//
 	//// 增
-	db.Create(&UserInfo{
-		Name:   "marry",
-		Gender: "女",
-		Hobby:  "旅游",
-	})
+	//db.Create(&UserInfo{
+	//	Name:   "marry",
+	//	Gender: "女",
+	//	Hobby:  "旅游",
+	//})
 
 	// 查
 	var u UserInfo
@@ -39,6 +39,14 @@ func main() {
 	fmt.Printf("id=%v, name=%v, gender=%v, hobby:%v\n", u.ID, u.Name, u.Gender, u.Hobby)
 	//db.First(&u, "gender=?", "男") // 性别男
 	//fmt.Printf("id=%v, name=%v, gender=%v, hobby:%v\n", u.ID, u.Name, u.Gender, u.Hobby)
+	// 原生查询
+	var users []*UserInfo
+	users = []*UserInfo{}
+	db.Table("user_infos").Where("user_infos.gender=?", "男").Find(&users)
+	fmt.Printf("users=%v\n", users)
+	for idx, user := range users {
+		fmt.Printf("idx=%d, user=%#v\n", idx, user)
+	}
 
 	// 改
 	//db.Model(&u).Update("gender", "女")

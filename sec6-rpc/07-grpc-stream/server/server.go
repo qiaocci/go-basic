@@ -1,25 +1,19 @@
 package main
 
 import (
-	"context"
 	"google.golang.org/grpc"
 	pb "grpc-client-and-server/proto"
 	"log"
 	"net"
 )
 
-type SearchService struct {
-}
-
-func (s SearchService) Search(ctx context.Context, r *pb.SearchRequest) (*pb.SearchResponse, error) {
-	return &pb.SearchResponse{Response: r.GetRequest() + " Server"}, nil
-}
+type StreamService struct{}
 
 const PORT = "9001"
 
 func main() {
 	server := grpc.NewServer()
-	pb.RegisterSearchServiceServer(server, &SearchService{})
+	pb.RegisterStreamServiceServer(server, &StreamService{})
 
 	lis, err := net.Listen("tcp", ":"+PORT)
 	if err != nil {
@@ -27,4 +21,16 @@ func main() {
 	}
 
 	server.Serve(lis)
+}
+
+func (s *StreamService) List(r *pb.Request, stream pb.StreamService_ListServer) error {
+	return nil
+}
+
+func (s *StreamService) Record(stream pb.StreamService_RecordServer) error {
+	return nil
+}
+
+func (s *StreamService) Route(stream pb.StreamService_RouteServer) error {
+	return nil
 }
