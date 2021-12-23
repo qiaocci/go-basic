@@ -33,13 +33,13 @@ type priceDB struct {
 	db map[string]dollars
 }
 
-func (p priceDB) list(w http.ResponseWriter, req *http.Request) {
+func (p *priceDB) list(w http.ResponseWriter, req *http.Request) {
 	for item, price := range p.db {
 		fmt.Fprintf(w, "%s: %s\n", item, price)
 	}
 }
 
-func (p priceDB) price(w http.ResponseWriter, req *http.Request) {
+func (p *priceDB) price(w http.ResponseWriter, req *http.Request) {
 	item := req.URL.Query().Get("item")
 	price, ok := p.db[item]
 	if !ok {
@@ -51,7 +51,7 @@ func (p priceDB) price(w http.ResponseWriter, req *http.Request) {
 
 }
 
-func (p priceDB) updatePrice(w http.ResponseWriter, req *http.Request) {
+func (p *priceDB) updatePrice(w http.ResponseWriter, req *http.Request) {
 	mux.Lock()
 	defer mux.Unlock()
 
