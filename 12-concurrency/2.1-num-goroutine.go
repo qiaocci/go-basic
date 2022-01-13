@@ -1,0 +1,18 @@
+package main
+
+import (
+	"fmt"
+	"runtime"
+	"time"
+)
+
+func main() {
+	for i := 0; i < 20; i++ {
+		go execute()
+	}
+	fmt.Println(runtime.NumGoroutine()) // 21
+}
+
+func execute() {
+	time.Sleep(time.Second * 10)
+}
