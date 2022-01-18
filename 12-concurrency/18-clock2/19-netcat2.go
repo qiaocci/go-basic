@@ -14,7 +14,7 @@ func main() {
 	}
 	done := make(chan struct{})
 	go func() {
-		io.Copy(os.Stdout, conn)
+		io.Copy(os.Stdout, conn) // ignore errors
 		log.Println("done")
 		done <- struct{}{}
 	}()
