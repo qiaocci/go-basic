@@ -19,14 +19,15 @@ func main() {
 			log.Println(err) // eg, connection aborted
 			continue
 		}
-		go handleConn(conn)
+		handleConn(conn) // 增加go关键字
+
 	}
 }
 
 func handleConn(c net.Conn) {
 	defer c.Close()
 	for {
-		_, err := io.WriteString(c, time.Now().Format(time.RFC3339)+"\n")
+		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
 		if err != nil {
 			return // eg, client disconnected¬
 		}
