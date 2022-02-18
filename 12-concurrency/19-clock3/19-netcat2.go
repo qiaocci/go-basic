@@ -8,10 +8,15 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "localhost:8000")
+	addr, err := net.ResolveTCPAddr("tcp", "localhost:8000")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
+	conn, err := net.DialTCP("tcp", nil, addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	done := make(chan struct{})
 	go func() {
 		// func Copy(dst Writer, src Reader) (written int64, err error)
@@ -20,7 +25,7 @@ func main() {
 		done <- struct{}{}
 	}()
 	mustCopy(conn, os.Stdin)
-	conn.Close()
+	conn.CloseWrite()
 	<-done
 }
 
