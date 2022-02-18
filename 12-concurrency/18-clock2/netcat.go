@@ -12,19 +12,13 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	done := make(chan struct{})
-	go func() {
-		// func Copy(dst Writer, src Reader) (written int64, err error)
-		io.Copy(os.Stdout, conn) //  ignore errors
-		log.Println("done")
-		done <- struct{}{}
-	}()
+	defer conn.Close()
+	go mustCopy(os.Stdout, conn)
 	mustCopy(conn, os.Stdin)
-	conn.Close()
-	<-done
 }
 
 func mustCopy(dst io.Writer, src io.Reader) {
+	// 指定的src复制到dst，直到在src上达到EOF或引发错误为止。
 	_, err := io.Copy(dst, src)
 	if err != nil {
 		log.Fatalln(err)
