@@ -14,7 +14,7 @@ func main() {
 	// pipeline 2, 平方
 	go pingfang(counters, pingFangs)
 
-	// pipeline 3, 平方
+	// pipeline 3, 打印
 	printNum(pingFangs)
 }
 
