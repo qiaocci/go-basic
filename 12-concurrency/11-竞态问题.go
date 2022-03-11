@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 var wg3 sync.WaitGroup
@@ -12,7 +11,7 @@ var x int
 func add() {
 	for i := 0; i < 5000; i++ {
 		x = x + i
-		time.Sleep(time.Millisecond * 1)
+		//time.Sleep(time.Millisecond * 1)
 	}
 	wg3.Done()
 }

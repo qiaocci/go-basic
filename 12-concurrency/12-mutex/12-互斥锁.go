@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 var wg sync.WaitGroup
@@ -15,7 +14,7 @@ func add() {
 		lock.Lock() // 加锁
 		x = x + i
 		lock.Unlock() // 解锁
-		time.Sleep(time.Millisecond * 1)
+		//time.Sleep(time.Millisecond * 1)
 	}
 	wg.Done()
 }
